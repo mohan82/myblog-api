@@ -2,4 +2,7 @@
 *.iml
 node_modules/
 bower_components/
+npm*.log
+*.log
+*.out
 
