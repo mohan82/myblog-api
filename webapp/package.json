@@ -1,25 +1,31 @@
 {
-  "name": "myblog",
-  "version": "1.0.0",
-  "description": "My Personal Blog",
-  "main": "blogservice.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https:/github.com/mohan82/myblog.git"
-  },
-  "keywords": [
-    "blog"
-  ],
-  "author": "Mohan Ambalavanan",
-  "license": "Apache",
-   "dependencies":{
-       "blogparser":"../blog_parser/"
-   },
-   "devDependencies": {
+    "name": "myblog",
+    "version": "1.0.0",
+    "description": "My Personal Blog",
+    "main": "blogservice.js",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https:/github.com/mohan82/myblog.git"
+    },
+    "keywords": [
+        "blog"
+    ],
+    "author": "Mohan Ambalavanan",
+    "license": "Apache",
+    "dependencies": {
+        "blogparser": "blogparser/"
+    },
+    "devDependencies": {
         "chai": "1.9.1",
         "mocha": "1.21.4"
-   }
+    },
+    "engines": {
+        "node":">=0.11.14",
+        "npm": ">=2.0.0"
+    },
+    "engineStrict": true
 }

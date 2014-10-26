@@ -1,0 +1,29 @@
+{
+    "name": "myblog",
+    "version": "1.0.0",
+    "description": "My Personal Blog",
+    "main": "gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mohan82/myblog.git"
+    },
+    "keywords": [
+        "Blog"
+    ],
+    "author": "Mohan Ambalavanan <mohan.ambalavanan@gmail.com>",
+    "license": "Apache",
+    "bugs": {
+        "url": "https://github.com/mohan82/myblog/issues"
+    },
+    "homepage": "https://github.com/mohan82/myblog",
+    "devDependencies": {
+        "chai": "^1.9.2",
+        "gulp": "^3.8.9",
+        "shelljs": "^0.3.0",
+        "gulp-mocha": "^1.1.1",
+        "mocha": "^2.0.1"
+    }
+}

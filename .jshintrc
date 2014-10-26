@@ -1,6 +1,7 @@
 {
 
     "globals": {
+        "console":false,
         "require": false,
         "exports": false,
         "describe": false,
