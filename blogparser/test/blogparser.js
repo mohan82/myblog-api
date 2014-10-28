@@ -10,6 +10,6 @@ var blogParser = new BlogParser("test.xml");
 
 describe("Test for Blog Parser",function(){
     it("Test parseBlog Function ",function(){
-        expect(blogParser.parseBlog()).to.contain("Try to parse");
+        expect(blogParser.parseBlog()).to.contain("Yet to parse");
     });
 });
