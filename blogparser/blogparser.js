@@ -7,21 +7,13 @@ var util = require("util");
 //TODO: Dump Q for Bluebird
 var Q = require("q");
 var parser = new xml2js.Parser();
+var common = require("common");
 
 var BlogParser = {};
-//TODO :Move to Util function
-BlogParser.isStringEmpty = function (text) {
-    if (util.isNullOrUndefined(text)
-        || !util.isString(text)
-        || !text.trim()) {
-        return true;
-    } else {
-        return false;
-    }
-};
+
 BlogParser.parseBlogContent = function (xml) {
     console.info("Parsing blog content..");
-    if (BlogParser.isStringEmpty(xml)) {
+    if (common.Util.isStringEmpty(xml)) {
         throw new BlogParser.ParseError("Cannot parse empty string");
     }
     var deferred = Q.defer();

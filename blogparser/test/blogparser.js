@@ -34,28 +34,6 @@ describe("Test for Blog Parser", function () {
 
     });
 
-    it("Given blank string isStringEmpty should return true", function () {
-        blogParser.isStringEmpty(' ').should.be.true;
-    });
-
-    it("Given not blanks string isStringEmpty should return false", function () {
-        blogParser.isStringEmpty('hello world').should.be.false;
-    });
-
-
-    it("Given empty string isStringEmpty should return true", function () {
-        blogParser.isStringEmpty('').should.be.true;
-    });
-    it("Given null isStringEmpty should return true", function () {
-        blogParser.isStringEmpty(null).should.be.true;
-    });
-    it("Given undefined isStringEmpty should return true", function () {
-        blogParser.isStringEmpty().should.be.true;
-    });
-    it("Given number isStringEmpty should return true", function () {
-        blogParser.isStringEmpty(1).should.be.true;
-    });
-
 
     it("given blog.xml parseBlogContent should return blog data with title Mohan", function () {
         return blogParser.parseBlogContent(testContent)
@@ -72,7 +50,7 @@ describe("Test for Blog Parser", function () {
     });
 
     it("given empty xml parseBlogContent should throw parse error", function () {
-       expect(blogParser.parseBlogContent.bind(blogParser,'')).to.throw(blogParser.ParseError);
+        expect(blogParser.parseBlogContent.bind(blogParser, '')).to.throw(blogParser.ParseError);
 
     });
 

@@ -14,7 +14,6 @@ var expect = chai.expect,
 
 var TEST_FILE_PATH = path.resolve('common/test_data/blog.xml');
 
-
 describe("Test Blog Service", function () {
     var testContent;
     before("Read File", function (done) {
