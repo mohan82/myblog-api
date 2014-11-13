@@ -1,6 +1,7 @@
 "use strict"
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
+var gutil = require('gulp-util');
 require('shelljs/global');
 
 var BLOG_PARSER_DIR = "blogparser/";
@@ -14,9 +15,9 @@ function executeShellCommand(command, ignoreError) {
 }
 
 
-gulp.task("build",['build-all', 'test']);
+gulp.task("build", ['build-all', 'test']);
 
-gulp.task("clean-build",['clean-all']);
+gulp.task("clean-build", ['clean-all']);
 
 
 gulp.task("default", ["build"]);
@@ -29,11 +30,12 @@ gulp.task("build-all", ["build-blogparser", "build-webapp"]);
 
 gulp.task("run-blog-test", function () {
     gulp.src(BLOG_PARSER_TEST_DIR + "*.js", {read: false})
-        .pipe(mocha({reporter: 'spec'}));
+        .pipe(mocha({reporter: 'spec'})).on('error', gutil.log);
 });
 
 gulp.task("run-webapp-test", function () {
-    gulp.src(WEBAPP_TEST_DIR + "/*.js", {read: false}).pipe(mocha({reporter: 'spec'}));
+    gulp.src(WEBAPP_TEST_DIR + "/*.js", {read: false}).pipe(mocha({reporter: 'spec'}))
+        .on('error', gutil.log);
 });
 
 gulp.task("clean-blogparser", function () {
@@ -59,6 +61,6 @@ gulp.task("build-webapp", function () {
 
 });
 
-gulp.task('execute-test',function(){
-    gulp.watch("**/test/*.js",["test"]);
+gulp.task('execute-test', function () {
+    gulp.watch("**/**/*.js", ["test"]);
 });

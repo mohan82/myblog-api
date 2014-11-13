@@ -1,30 +1,32 @@
 {
-    "name": "blogparser",
-    "version": "1.0.0",
-    "description": "Simple Wordpress Blog Parser",
-    "main": "blogparser.js",
-    "private": "true",
-    "scripts": {
-        "test": "echo \" No test yet \""
-    },
-    "repository": {
-        "type": "git",
-        "url": "https:github.com/mohan82/myblog.git"
-    },
-    "keywords": [
-        "parser",
-        "wordpress_parser",
-        "blog_parser"
-    ],
-    "dependencies": {
-        "xml2js": "0.4.4",
-        "moment": "^2.8.3"
+  "name": "blogparser",
+  "version": "1.0.0",
+  "description": "Simple Wordpress Blog Parser",
+  "main": "blogparser.js",
+  "private": "true",
+  "scripts": {
+    "test": "echo \" No test yet \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https:github.com/mohan82/myblog.git"
+  },
+  "keywords": [
+    "parser",
+    "wordpress_parser",
+    "blog_parser"
+  ],
+  "dependencies": {
+    "moment": "^2.8.3",
+    "q": "^1.0.1",
+    "xml2js": "0.4.4"
+  },
+  "devDependencies": {
+    "chai": "1.9.1",
+    "chai-as-promised": "^4.1.1",
+     "mocha": "1.21.4"
 
-    },
-    "devDependencies": {
-        "chai": "1.9.1",
-        "mocha": "1.21.4"
-    },
-    "author": "Mohan Ambalavanan <mohan.ambalavanan@gmail.com>",
-    "license": "Apache "
+  },
+  "author": "Mohan Ambalavanan <mohan.ambalavanan@gmail.com>",
+  "license": "Apache "
 }
