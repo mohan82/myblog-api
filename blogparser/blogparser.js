@@ -4,18 +4,31 @@
 var xml2js = require('xml2js');
 var fs = require("fs");
 var util = require("util");
+//TODO: Dump Q for Bluebird
 var Q = require("q");
 var parser = new xml2js.Parser();
 
 var BlogParser = {};
-
+//TODO :Move to Util function
+BlogParser.isStringEmpty = function (text) {
+    if (util.isNullOrUndefined(text)
+        || !util.isString(text)
+        || !text.trim()) {
+        return true;
+    } else {
+        return false;
+    }
+};
 BlogParser.parseBlogContent = function (xml) {
     console.info("Parsing blog content..");
+    if (BlogParser.isStringEmpty(xml)) {
+        throw new BlogParser.ParseError("Cannot parse empty string");
+    }
     var deferred = Q.defer();
     parser.parseString(xml, function (err, rawBlogContent) {
         if (err) {
-            deferred.reject(new Error("Cannot parse given :" +
-            xml + err.stack));
+            deferred.reject(new BlogParser.ParseError("Cannot parse given :" +
+            xml + " , " + err.stack));
         } else {
             deferred.resolve(rawBlogContent);
         }
@@ -50,5 +63,14 @@ function parsePosts(rawBlogContent) {
     });
     return posts;
 }
+//Parser Error
+var ParseError = exports.ParseError = function (message) {
+    Error.captureStackTrace(this, ParseError);
+    this.message = message;
+}
+ParseError.prototype = Object.create(Error.prototype);
+ParseError.prototype.constructor = ParseError;
+
+BlogParser.ParseError = ParseError;
 
 module.exports = BlogParser;
