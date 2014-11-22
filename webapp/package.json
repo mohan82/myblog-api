@@ -18,7 +18,7 @@
   "license": "Apache",
   "dependencies": {
     "blogparser": "blogparser/",
-    "q": "^1.1.1"
+    "bluebird": "^2.3.11"
   },
   "devDependencies": {
     "chai": "^1.10.0",

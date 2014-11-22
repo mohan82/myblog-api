@@ -1,0 +1,31 @@
+{
+  "name": "persistence",
+  "version": "1.0.0",
+  "description": "Persistence Layer for MyBlog",
+  "main": "persistence.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohan82/myblog"
+  },
+  "keywords": [
+    "blog_persistence"
+  ],
+  "author": "Mohan Ambalavanan <mohan.ambalavanan@gmail.com>",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/mohan82/myblog/issues"
+  },
+  "homepage": "https://github.com/mohan82/myblog",
+  "dependencies": {
+    "knex": "^0.7.3",
+    "pg": "^3.6.3"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1",
+    "sqlite3": "^3.0.4"
+  }
+}

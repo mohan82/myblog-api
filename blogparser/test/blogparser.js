@@ -1,9 +1,11 @@
 /**
  * Created by mohan on 25/10/14.
  */
-"use strict"
+"use strict";
 
 var fs = require("fs");
+var Promise = require("bluebird");
+
 var path = require("path");
 
 //Chai Libraries
@@ -33,7 +35,14 @@ describe("Test for Blog Parser", function () {
 
 
     });
+    function getExpectGetPosts() {
+        return expect(blogParser.parseBlogContent(testContent).then(blogParser.getPosts));
+    }
 
+    function getExpectGlassFishItem() {
+        return getExpectGetPosts()
+            .to.eventually.is.an('array').with.deep.property('[2]');
+    }
 
     it("given blog.xml parseBlogContent should return blog data with title Mohan", function () {
         return blogParser.parseBlogContent(testContent)
@@ -55,10 +64,20 @@ describe("Test for Blog Parser", function () {
     });
 
     it('given blog.xml getPosts should return the correct number of post', function () {
-        return expect(blogParser.parseBlogContent(testContent).then(blogParser.getPosts.bind(blogParser))).
-            to.eventually.have.property('length', 10);
+        return getExpectGetPosts().
+            to.eventually.have.property('length', 9);
 
     });
-
+    it("given blog.xml getPost third post item title should be about glassfish ", function () {
+        return getExpectGlassFishItem().with.deep.property('title').that.is.to.contain('GlassFish');
+    });
+    it("given blog.xml getPost third post item should have valid guid ", function () {
+        return getExpectGlassFishItem()
+            .with.deep.property('guid').that.is.to.equal('http://mohan82.wordpress.com/?p=15');
+    });
+    it("given blog.xml getPost third post item should have valid pubDate ", function () {
+        return getExpectGlassFishItem()
+            .with.deep.property('pubDate').that.is.to.equal(new Date('Mon, 06 Jun 2011 10:31:11 +0000'));
+    });
 
 });

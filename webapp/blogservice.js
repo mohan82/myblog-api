@@ -1,6 +1,6 @@
 "use strict"
 var blogParser = require("blogparser");
-var Q = require("q");
+var Promise = require("bluebird");
 
 
 var BlogService = {};

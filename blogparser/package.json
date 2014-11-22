@@ -17,9 +17,9 @@
     "blog_parser"
   ],
   "dependencies": {
-    "common":"common/",
+    "bluebird": "^2.3.11",
+    "common": "common/",
     "moment": "2.8.3",
-    "q": "1.0.1",
     "xml2js": "0.4.4"
   },
   "devDependencies": {
