@@ -21,11 +21,14 @@
   "homepage": "https://github.com/mohan82/myblog",
   "dependencies": {
     "knex": "^0.7.3",
-    "pg": "^3.6.3"
+    "pg": "4.1.1",
+    "bluebird": "2.3.11",
+    "common":"common/"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "mocha": "^2.0.1",
-    "sqlite3": "^3.0.4"
+    "chai-as-promised": "4.1.1",
+    "chai": "1.10.0",
+    "mocha": "2.0.1",
+    "sqlite3": "3.0.4"
   }
 }

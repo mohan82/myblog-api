@@ -1,10 +1,12 @@
-"use strict"
+"use strict";
 var util = require('util');
+var config = require("./config.js");
+
 
 var Common = {};
-Common.Util ={};
+var Util ={};
 
-Common.Util.isStringEmpty = function (text) {
+Util.isStringEmpty = function (text) {
     if (util.isNullOrUndefined(text)
         || !util.isString(text)
         || !text.trim()) {
@@ -13,6 +15,7 @@ Common.Util.isStringEmpty = function (text) {
         return false;
     }
 };
+
 //Common.Util.createError =function(errorObjectName){
 //    errorObjectName = function (message) {
 //        Error.captureStackTrace(this,errorObjectName);
@@ -24,4 +27,6 @@ Common.Util.isStringEmpty = function (text) {
 ////Parser Error
 //ParseError.prototype = Object.create(Error.prototype);
 //ParseError.prototype.constructor = ParseError;
+Common.config = config;
+Common.Util = Util;
 module.exports = Common;

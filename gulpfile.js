@@ -12,7 +12,8 @@ var COMMON_TEST_DIR = COMMON_DIR + "test/";
 var BLOG_PARSER_DIR = "blogparser/";
 var BLOG_PARSER_TEST_DIR = BLOG_PARSER_DIR + "test/";
 var WEBAPP_DIR = "webapp/";
-
+var PERSISTENCE_DIR = "persistence/";
+var PERSISTENCE_TEST_DIR = PERSISTENCE_DIR + "test/";
 var WEBAPP_TEST_DIR = WEBAPP_DIR + "test/";
 
 
@@ -29,9 +30,9 @@ gulp.task("clean-build", ['clean-all']);
 gulp.task("default", ["build"]);
 
 
-gulp.task("test", ["run-common-test", "run-blog-test", "run-webapp-test"]);
-gulp.task("clean-all", ["clean-common", "clean-blogparser", "clean-webapp"]);
-gulp.task("build-all", ["build-common", "build-blogparser", "build-webapp"]);
+gulp.task("test", ["run-common-test", "run-blog-test","run-persistence-test", "run-webapp-test"]);
+gulp.task("clean-all", ["clean-common", "clean-blogparser", "clean-persistence", "clean-webapp"]);
+gulp.task("build-all", ["build-common", "build-blogparser", "build-persistence", "build-webapp"]);
 
 
 gulp.task("run-common-test", function () {
@@ -45,9 +46,19 @@ gulp.task("run-blog-test", function () {
         .pipe(mocha({reporter: 'spec'})).on('error', gutil.log);
 });
 
+gulp.task("run-persistence-test",function(){
+   gulp.src(PERSISTENCE_TEST_DIR  + "*.js", {read: false})
+       .pipe(mocha({reporter: 'spec'})).on('error', gutil.log);
+});
 gulp.task("run-webapp-test", function () {
     gulp.src(WEBAPP_TEST_DIR + "/*.js", {read: false}).pipe(mocha({reporter: 'spec'}))
         .on('error', gutil.log);
+});
+
+gulp.task("clean-persistence", function () {
+    console.log("Cleaning up Persistence module");
+    executeShellCommand("rm -r " + PERSISTENCE_DIR + "node_modules");
+
 });
 
 gulp.task("clean-blogparser", function () {
@@ -76,6 +87,12 @@ gulp.task("build-common", function () {
 gulp.task("build-blogparser", function () {
     console.log("Building blog parser");
     executeShellCommand("npm install " + BLOG_PARSER_DIR + " --prefix " + BLOG_PARSER_DIR);
+});
+
+gulp.task("build-persistence", function () {
+    console.log("Building Persistence module");
+    executeShellCommand("npm install " + PERSISTENCE_DIR + " --prefix " + PERSISTENCE_DIR);
+
 });
 
 gulp.task("build-webapp", function () {

@@ -5,4 +5,4 @@ bower_components/
 npm*.log
 *.log
 *.out
-
+*.db
