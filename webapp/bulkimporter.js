@@ -6,6 +6,7 @@ var common = require('common');
 var Promise = require('bluebird');
 var fs = require("fs");
 var path = require("path");
+Promise.longStackTraces();
 
 var readFile = Promise.promisify(fs.readFile);
 
@@ -21,21 +22,19 @@ BulkImporter.prototype.importBlog = function () {
 };
 
 function main() {
-    var blogService = new BlogService(new Blog(common.config.DbConfig.dev()));
+    var devConfig = common.config.DbConfig.dev();
+    devConfig.debug =false;
+    var blogService = new BlogService(new Blog(devConfig));
     var bulkImporter = new BulkImporter(blogService);
     readFile(BLOG_FILE_PATH, "UTF-8")
         .then(blogService.parseBlogContent.bind(blogService))
         .then(blogService.getPostResult.bind(blogService))
         .then(blogService.savePost.bind(blogService))
         .catch(function (error) {
-            console.error(error);
-            throw error;
-
+            console.error(error.stack);
         }).finally(blogService.blogObj.
             cleanUp.bind(blogService.blogObj
         ));
-
-
 }
 
 main();

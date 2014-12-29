@@ -40,7 +40,7 @@ describe("BlogService Integration Test", function () {
             posts.push({
                 title: "test_tile:" + i,
                 content: "test_content",
-                guid: "test_guid",
+                guid: "test_guid"+i,
                 publicationDate:new Date()
             });
         }

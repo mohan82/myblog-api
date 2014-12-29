@@ -47,10 +47,10 @@ describe("Integration Test for Blog DB", function () {
     });
 
     afterEach("Clean up Blog Post DML Initialisation", function (done) {
-        blogObj.getAllPosts().then(function (posts) {
-            var post = posts[0];
-            console.log("About to delete post %s", post.POST_PK);
-            blogObj.deletePost(post.POST_PK).then(function () {
+        blogObj.findPostByTitle(TEST_POST.title).then(function (posts) {
+            var post =posts[0];
+            console.log("About to delete post %s", post.post_pk);
+            blogObj.deletePost(post.post_pk).then(function () {
                 console.log("Successfully deleted post");
                 done();
             });

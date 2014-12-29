@@ -27,10 +27,13 @@ Blog.prototype.createPostTable = function () {
     console.info("Creating %s table if exist", CONST.POST.TABLE);
     return this.knex.schema.createTable(CONST.POST.TABLE, function (table) {
         table.increments(CONST.POST.PK);
-        table.string(CONST.POST.GUID);
-        table.string(CONST.POST.TITLE);
-        table.binary(CONST.POST.CONTENT);
-        table.datetime(CONST.POST.PUB_DATE);
+        table.string(CONST.POST.GUID).unique();
+        table.string(CONST.POST.TITLE).unique()
+            .notNullable();
+        table.binary(CONST.POST.CONTENT)
+            .notNullable();
+        table.datetime(CONST.POST.PUB_DATE).index(CONST.POST.IDX_PUBDATE)
+            .notNullable();
     });
 };
 
@@ -47,7 +50,6 @@ Blog.prototype.savePost = function (post) {
         "guid": post.guid,
         "publication_date":post.publicationDate
     };
-    console.info("inserting record %s", record.title + record.content + record.guid);
     return this.knex.insert(record).into(CONST.POST.TABLE);
 };
 
