@@ -10,6 +10,10 @@ var common = require("common");
 
 var BlogParser = {};
 
+var CONTENT_ELEMENT = "content:encoded";
+var POST_TYPE_ELEMENT = "wp:post_type";
+var POST_CONTENT_TYPE = "post";
+
 BlogParser.Post = function (title, content, publicationDate, guid) {
     this.title = title;
     this.content = content;
@@ -17,6 +21,7 @@ BlogParser.Post = function (title, content, publicationDate, guid) {
     this.guid = guid;
 
 };
+
 
 BlogParser.parseBlogContent = function (xml) {
     console.info("Parsing blog content..");
@@ -39,38 +44,106 @@ BlogParser.parseBlogContent = function (xml) {
 
 };
 
-
 BlogParser.getPosts = function (rawBlogContent) {
     console.info("Tyring to parse given rawBlogContent:" + rawBlogContent);
-    return Promise.resolve(parsePosts(rawBlogContent));
+    return Promise.resolve(BlogParser._parsePosts(rawBlogContent));
 
 };
 
-function parsePosts(rawBlogContent) {
+//__Private Parser Methods ___
+
+BlogParser._getTitle = function (element) {
+    return String(element.title);
+};
+BlogParser._getContent = function (element) {
+    return String(element[CONTENT_ELEMENT]);
+};
+
+BlogParser._getGuid = function (element) {
+    return String(element.guid[0]._);
+};
+
+BlogParser._getContentType = function (element) {
+    return String(element[POST_TYPE_ELEMENT]);
+};
+BlogParser._isPostContentType = function(element){
+  var contentType = this._getContentType(element);
+    return contentType === POST_CONTENT_TYPE;
+};
+
+BlogParser._getPubDate = function (element) {
+    return element.pubDate;
+};
+
+BlogParser._parsePosts = function(rawBlogContent) {
     console.info("Tyring to parse posts of given rawBlogContent:" + rawBlogContent);
     var posts = [];
     rawBlogContent.rss.channel.forEach(function (channelElement) {
         channelElement.item.forEach(function (itemElement, index) {
 
-            var title = String(itemElement.title);
-            if (common.Util.isStringEmpty(title)) {
+            if (!BlogFilter.isValidPost(itemElement)) {
+                console.warn("Invalid element %s, skipping ..", itemElement.title);
                 return;
             }
-            var content = String(itemElement["content:encoded"]);
-            var guid = String(itemElement.guid[0]._);
-            var publicationDate = new Date(itemElement.pubDate);
-            var post = new BlogParser.Post(title, content, publicationDate, guid);
+
+            var publicationDate = new Date(BlogParser._getPubDate(itemElement));
+            var post = new BlogParser.Post(BlogParser._getTitle(itemElement),
+                BlogParser._getContent(itemElement),
+                publicationDate,
+                BlogParser._getGuid(itemElement));
             posts.push(post);
         });
     });
     return posts;
+};
+
+//__End Private Methods ___
+
+
+
+//Blog Filter
+var BlogFilter = function () {
+};
+
+BlogFilter.hasTitle = function (element) {
+    return !common.Util.isStringEmpty(BlogParser._getTitle(element));
+};
+
+
+BlogFilter.hasValidPublicationDate = function (element) {
+    var time = Date.parse(BlogParser._getPubDate(element));
+    if (!isNaN(time)) {
+        return true;
+    } else {
+        console.warn("Invalid time :%s for element  %s:", BlogParser._getPubDate(element),
+            BlogParser._getTitle(element));
+        return false;
+    }
+};
+
+BlogFilter.hasValidContentType = function(element){
+    if(BlogParser._isPostContentType(element)){
+        return true;
+    }else {
+        console.warn("Invalid content type :%s for item %s ,only post is parsed ",
+        BlogParser._getContentType(element),BlogParser._getTitle(element));
+        return false;
+    }
 }
+
+
+BlogFilter.isValidPost = function (element) {
+    return this.hasTitle(element)
+        && this.hasValidPublicationDate(element)
+        && this.hasValidContentType(element);
+};
+
 
 //Parser Error
 var ParseError = exports.ParseError = function (message) {
     Error.captureStackTrace(this, ParseError);
     this.message = message;
-}
+};
 ParseError.prototype = Object.create(Error.prototype);
 ParseError.prototype.constructor = ParseError;
 

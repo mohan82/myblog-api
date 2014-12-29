@@ -5,28 +5,24 @@ var common = require('common');
 var knex = require('knex');
 var Promise = require('bluebird');
 
-var devKnexConfig = common.config.DbConfig.dev();
-var conn = knex(devKnexConfig);
-var blogObj = new Blog(conn);
 
-blogObj.dropPostTable().then(blogObj.createPostTable.bind(blogObj))
-    .then(function () {
-        blogObj.savePost({
-            "title": "test",
-            "content": "Test Content",
-            "guid": "test guid"
+function Schema(blog){
+    this.blog=blog;
+}
 
-        });
-    }).
-    catch(function (error) {
-        console.log("error" + error);
-    })
-    .finally(function () {
-        console.info("Gracefully shutting down knex engine");
-        conn.destroy();
+Schema.prototype.createSchema = function(){
 
-    }).catch(function (e) {
-        throw  e;
-    });
+    console.log("Creating Blog Table if does not exist");
+    return Promise.resolve(
+    this.blog.dropPostTable().then(this.blog.createPostTable.bind(this.blog)));
+};
+
+
+function main(){
+    var schema = new Schema(new Blog(common.config.DbConfig.dev()));
+    schema.createSchema().finally(schema.blog.cleanUp.bind(schema.blog));
+}
+
+main();
 
 

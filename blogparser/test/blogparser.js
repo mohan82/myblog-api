@@ -65,7 +65,7 @@ describe("Test for Blog Parser", function () {
 
     it('given blog.xml getPosts should return the correct number of post', function () {
         return getExpectGetPosts().
-            to.eventually.have.property('length', 9);
+            to.eventually.have.property('length', 8);
 
     });
     it("given blog.xml getPost third post item title should be about glassfish ", function () {

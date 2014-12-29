@@ -36,6 +36,7 @@ Blog.prototype.createPostTable = function () {
 
 
 Blog.prototype.cleanUp = function(){
+    console.log("Cleaning up Knex");
    this.knex.destroy();
 };
 

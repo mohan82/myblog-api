@@ -36,7 +36,7 @@ describe("Test Blog Service Parsing", function () {
     it("given valid test blog xml import blog should contain valid title", function (done) {
         console.log("importing blog");
         blogService.importBlog(testContent, function (postResult) {
-            expect(postResult).to.have.property('length', 9);
+            expect(postResult).to.have.property('length', 8);
             done();
         });
     });
