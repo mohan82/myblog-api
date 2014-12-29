@@ -10,10 +10,10 @@ var common = require("common");
 
 var BlogParser = {};
 
-BlogParser.Post = function (title, content, pubDate, guid) {
+BlogParser.Post = function (title, content, publicationDate, guid) {
     this.title = title;
     this.content = content;
-    this.pubDate = pubDate;
+    this.publicationDate = publicationDate;
     this.guid = guid;
 
 };
@@ -58,8 +58,8 @@ function parsePosts(rawBlogContent) {
             }
             var content = String(itemElement["content:encoded"]);
             var guid = String(itemElement.guid[0]._);
-            var pubDate = new Date(itemElement.pubDate);
-            var post = new BlogParser.Post(title, content, pubDate, guid);
+            var publicationDate = new Date(itemElement.publicationDate);
+            var post = new BlogParser.Post(title, content, publicationDate, guid);
             posts.push(post);
         });
     });

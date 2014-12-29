@@ -30,6 +30,7 @@ Blog.prototype.createPostTable = function () {
         table.string(CONST.POST.GUID);
         table.string(CONST.POST.TITLE);
         table.binary(CONST.POST.CONTENT);
+        table.datetime(CONST.POST.PUB_DATE);
     });
 };
 
@@ -42,7 +43,8 @@ Blog.prototype.savePost = function (post) {
     var record = {
         "title": post.title,
         "content": post.content,
-        "guid": post.guid
+        "guid": post.guid,
+        "publication_date":post.publicationDate
     };
     console.info("inserting record %s", record.title + record.content + record.guid);
     return this.knex.insert(record).into(CONST.POST.TABLE);

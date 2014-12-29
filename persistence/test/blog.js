@@ -22,7 +22,8 @@ describe("Integration Test for Blog DB", function () {
     var TEST_POST = {
         "title": "test_title",
         "content": "test_content",
-        "guid": "test_guid"
+        "guid": "test_guid",
+        "publicationDate":new Date()
     };
 
     before("Create Tables", function () {
@@ -71,7 +72,7 @@ describe("Integration Test for Blog DB", function () {
     it("given valid post record findPostById should retun valid post record", function (done) {
         blogObj.getAllPosts().then(function (posts) {
             var post = posts[0];
-            var id = post.POST_PK;
+            var id = post.post_pk;
             blogObj.findPostById(id).should.eventually
                 .have.deep.property('[0]').that.have.property(CONST.POST.PK)
                 .that.equals(id).notify(done);
