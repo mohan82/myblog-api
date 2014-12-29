@@ -58,7 +58,7 @@ function parsePosts(rawBlogContent) {
             }
             var content = String(itemElement["content:encoded"]);
             var guid = String(itemElement.guid[0]._);
-            var publicationDate = new Date(itemElement.publicationDate);
+            var publicationDate = new Date(itemElement.pubDate);
             var post = new BlogParser.Post(title, content, publicationDate, guid);
             posts.push(post);
         });

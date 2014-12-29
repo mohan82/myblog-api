@@ -77,7 +77,7 @@ describe("Test for Blog Parser", function () {
     });
     it("given blog.xml getPost third post item should have valid pubDate ", function () {
         return getExpectGlassFishItem()
-            .with.deep.property('pubDate').that.is.to.equal(new Date('Mon, 06 Jun 2011 10:31:11 +0000'));
+            .with.deep.property('publicationDate').that.is.to.equal(new Date('Mon, 06 Jun 2011 10:31:11 +0000'));
     });
 
 });
