@@ -10,7 +10,6 @@ describe("Test for Common Util Functions", function () {
 
     it("Given blank string isStringEmpty should return true", function () {
         common.Util.isStringEmpty(' ').should.be.true;
-        console.log(common.config.DbConfig.dev());
     });
 
     it("Given not blanks string isStringEmpty should return false", function () {

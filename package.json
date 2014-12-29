@@ -20,12 +20,12 @@
   },
   "homepage": "https://github.com/mohan82/myblog",
   "devDependencies": {
-    "chai": "^1.9.2",
-    "chai-as-promised": "^4.1.1",
-    "gulp": "^3.8.9",
-    "gulp-mocha": "^1.1.1",
-    "gulp-util": "^3.0.1",
-    "mocha": "^2.0.1",
-    "shelljs": "^0.3.0"
+    "chai": "1.9.2",
+    "chai-as-promised": "4.1.1",
+    "gulp": "3.8.9",
+    "gulp-mocha": "1.1.1",
+    "gulp-util": "3.0.1",
+    "mocha": "2.0.1",
+    "shelljs": "0.3.0"
   }
 }

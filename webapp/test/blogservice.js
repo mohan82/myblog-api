@@ -2,23 +2,29 @@
  * Created by mohan on 25/10/14.
  */
 "use strict"
-var blogService = require("../blogservice.js");
+var BlogService = require("../blogservice.js");
+
+//File Dependencies
 var fs = require("fs");
 var path = require("path");
-var chai = require("chai");
 var Promise = require("bluebird");
 var readFile = Promise.promisify(fs.readFile);
-var chaiAsPromised = require("chai-as-promised");
 
+//Chai
+var chai = require("chai");
+var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 var expect = chai.expect,
     should = chai.should();
 
 var TEST_FILE_PATH = path.resolve('common/test_data/blog.xml');
 
-describe("Test Blog Service", function () {
+describe("Test Blog Service Parsing", function () {
     var testContent;
+    var blogService = new BlogService(null);
+
     before("Read File", function (done) {
+
         readFile(TEST_FILE_PATH, 'utf-8').then(function (data) {
             testContent = data;
             done();
@@ -34,4 +40,5 @@ describe("Test Blog Service", function () {
             done();
         });
     });
+
 });

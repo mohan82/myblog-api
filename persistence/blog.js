@@ -4,15 +4,16 @@ var CONST = require('../persistence/sqlconst');
 var util = require("util");
 var DEFAULT_LIMIT = 50;
 var MAX_THRESHOLD = 500;
+var knexModule = require("knex");
 /**
  *
  * @param name
  * @constructor
  */
-function Blog(knex) {
-    this.knex = knex;
-
+function Blog(knexConfig) {
+    this.knex = knexModule(knexConfig);
 }
+
 //DDL Functions
 Blog.prototype.dropPostTable = function () {
     console.info("Dropping table if exist");
@@ -33,10 +34,11 @@ Blog.prototype.createPostTable = function () {
 };
 
 
-
+Blog.prototype.cleanUp = function(){
+   this.knex.destroy();
+};
 
 Blog.prototype.savePost = function (post) {
-
     var record = {
         "title": post.title,
         "content": post.content,

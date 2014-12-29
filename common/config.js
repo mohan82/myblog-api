@@ -1,5 +1,7 @@
 /**All Configuration Dev and Production**/
+"use strict"
 
+var os = require("os");
 
 var Config = {};
 
@@ -33,10 +35,13 @@ DbConfig.dev = function(){
 
 /**Test/Integration Config**/
 DbConfig.test = function(){
+    //Every test requires unique db to avoid collisions
+    var uniqueID = Math.random();
+    var dbfullPath = os.tmpdir() + '/data_'+uniqueID+"_db.db";
     return {
         dialect: 'sqlite3',
         connection: {
-            filename: './data.db'
+            filename: dbfullPath
         },
         debug: true
     };

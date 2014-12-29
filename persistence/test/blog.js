@@ -11,14 +11,13 @@ var CONST = require('../sqlconst');
 
 var Blog = require("../blog");
 var common = require('common');
-var knexModule = require('knex');
-
+var knexModule = require("knex");
 
 describe("Integration Test for Blog DB", function () {
 
 
-    var knex = knexModule(common.config.DbConfig.test());
-    var blogObj = new Blog(knex);
+
+    var blogObj = new Blog(common.config.DbConfig.test());
 
     var TEST_POST = {
         "title": "test_title",
@@ -32,7 +31,7 @@ describe("Integration Test for Blog DB", function () {
 
     after("clean up connection", function (done) {
         blogObj.dropPostTable().then(function () {
-            knex.destroy();
+            blogObj.cleanUp();
             done();
         }).catch(function (error) {
             knex.destroy();
@@ -60,7 +59,7 @@ describe("Integration Test for Blog DB", function () {
     });
 
     it("given valid post table post table  should exist in db", function () {
-        return expect(knex.schema.hasTable(CONST.POST.TABLE)).to.eventually.be.true;
+        return expect(blogObj.knex.schema.hasTable(CONST.POST.TABLE)).to.eventually.be.true;
     });
 
     it("given Valid Post Record getAllPosts should return valid post title", function () {

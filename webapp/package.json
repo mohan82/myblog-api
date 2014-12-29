@@ -18,13 +18,17 @@
   "license": "Apache",
   "dependencies": {
     "blogparser": "blogparser/",
-    "bluebird": "^2.3.11"
+    "bluebird": "^2.3.11",
+    "persistence":"persistence/",
+    "common":"common/"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "chai-as-promised": "^4.1.1",
+    "chai": "1.10.0",
+    "chai-as-promised": "4.1.1",
     "mocha": "1.21.4",
-    "sinon": "^1.11.1"
+    "sinon": "1.11.1",
+    "sqlite3": "3.0.4"
+
   },
   "engines": {
     "node": ">=0.11.14",
