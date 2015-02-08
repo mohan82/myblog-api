@@ -7,7 +7,7 @@ var BlueBirdPromise = require('bluebird');
 var fs = require("fs");
 BlueBirdPromise.longStackTraces();
 
-var readFile = BlueBirdPromise.promisify(fs.readFile)
+var readFile = BlueBirdPromise.promisify(fs.readFile);
 
 var BLOG_FILE_PATH = "/home/mohan/All_Projects/node_projects/blog_data/blog.xml";
 
