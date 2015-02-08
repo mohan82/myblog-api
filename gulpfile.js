@@ -88,7 +88,8 @@ gulp.task('execute-test', function () {
 gulp.task('jshint', function () {
     //ignore test and node modules dir for code quality
     var codeQualityDir = ["!**/**/test/*.js",
-        "!**/node_modules/**/*.js", "**/**/*.js"];
+        "!**/node_modules/**/*.js", "**/**/*.js","!**/build/**/"];
+
     return gulp.src(codeQualityDir).
         pipe(jshint()).
         pipe(jshint.reporter(jshintStylish));

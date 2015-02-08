@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var CONST = require('../persistence/sqlconst');
 var util = require("util");
@@ -18,7 +18,7 @@ function Blog(knexConfig) {
 Blog.prototype.dropPostTable = function () {
     console.info("Dropping table if exist");
     return this.knex.schema.dropTableIfExists(CONST.POST.TABLE);
-}
+};
 
 /**
  * Table Create Post Table

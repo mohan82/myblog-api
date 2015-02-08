@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 var blogParser = require("blogparser");
-var Promise = require("bluebird");
+var BlueBirdPromise = require("bluebird");
 
 
 
@@ -25,11 +25,11 @@ BlogService.prototype.parseBlogContent = function (blogContent) {
 
 BlogService.prototype.savePost = function (posts) {
     var blog = this.blogObj;
-    var savePostPromises = [];
-    posts.forEach(function (postElement, index) {
-        savePostPromises.push(blog.savePost(postElement));
+    var savePostBlueBirdPromises = [];
+    posts.forEach(function (postElement) {
+        savePostBlueBirdPromises.push(blog.savePost(postElement));
     });
-   return Promise.all(savePostPromises).then(function(){
+   return BlueBirdPromise.all(savePostBlueBirdPromises).then(function(){
         console.log("Successfully saved");
     }).catch(function(error){
         console.error("Unknown exception occured:%s",error);

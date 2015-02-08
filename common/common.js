@@ -7,9 +7,9 @@ var Common = {};
 var Util ={};
 
 Util.isStringEmpty = function (text) {
-    if (util.isNullOrUndefined(text)
-        || !util.isString(text)
-        || !text.trim()) {
+    if (util.isNullOrUndefined(text) ||
+        !util.isString(text) ||
+        !text.trim()) {
         return true;
     } else {
         return false;

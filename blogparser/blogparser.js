@@ -2,9 +2,7 @@
 
 
 var xml2js = require('xml2js');
-var fs = require("fs");
-var util = require("util");
-var Promise = require("bluebird");
+var BluebirdPromise = require("bluebird");
 var parser = new xml2js.Parser();
 var common = require("common");
 
@@ -28,7 +26,7 @@ BlogParser.parseBlogContent = function (xml) {
     if (common.Util.isStringEmpty(xml)) {
         throw new BlogParser.ParseError("Cannot parse empty string");
     }
-    return new Promise(function (resolve, reject) {
+    return new BluebirdPromise(function (resolve, reject) {
         parser.parseString(xml, function (err, rawBlogContent) {
             if (err) {
                 var error = new BlogParser.ParseError("Cannot parse given :" +
@@ -46,7 +44,7 @@ BlogParser.parseBlogContent = function (xml) {
 
 BlogParser.getPosts = function (rawBlogContent) {
     console.info("Tyring to parse given rawBlogContent:" + rawBlogContent);
-    return Promise.resolve(BlogParser._parsePosts(rawBlogContent));
+    return BluebirdPromise.resolve(BlogParser._parsePosts(rawBlogContent));
 
 };
 
@@ -66,8 +64,8 @@ BlogParser._getGuid = function (element) {
 BlogParser._getContentType = function (element) {
     return String(element[POST_TYPE_ELEMENT]);
 };
-BlogParser._isPostContentType = function(element){
-  var contentType = this._getContentType(element);
+BlogParser._isPostContentType = function (element) {
+    var contentType = this._getContentType(element);
     return contentType === POST_CONTENT_TYPE;
 };
 
@@ -75,11 +73,11 @@ BlogParser._getPubDate = function (element) {
     return element.pubDate;
 };
 
-BlogParser._parsePosts = function(rawBlogContent) {
+BlogParser._parsePosts = function (rawBlogContent) {
     console.info("Tyring to parse posts of given rawBlogContent:" + rawBlogContent);
     var posts = [];
     rawBlogContent.rss.channel.forEach(function (channelElement) {
-        channelElement.item.forEach(function (itemElement, index) {
+        channelElement.item.forEach(function (itemElement) {
 
             if (!BlogFilter.isValidPost(itemElement)) {
                 console.warn("Invalid element %s, skipping ..", itemElement.title);
@@ -98,7 +96,6 @@ BlogParser._parsePosts = function(rawBlogContent) {
 };
 
 //__End Private Methods ___
-
 
 
 //Blog Filter
@@ -121,21 +118,21 @@ BlogFilter.hasValidPublicationDate = function (element) {
     }
 };
 
-BlogFilter.hasValidContentType = function(element){
-    if(BlogParser._isPostContentType(element)){
+BlogFilter.hasValidContentType = function (element) {
+    if (BlogParser._isPostContentType(element)) {
         return true;
-    }else {
+    } else {
         console.warn("Invalid content type :%s for item %s ,only post is parsed ",
-        BlogParser._getContentType(element),BlogParser._getTitle(element));
+            BlogParser._getContentType(element), BlogParser._getTitle(element));
         return false;
     }
-}
+};
 
 
 BlogFilter.isValidPost = function (element) {
-    return this.hasTitle(element)
-        && this.hasValidPublicationDate(element)
-        && this.hasValidContentType(element);
+    return this.hasTitle(element) &&
+        this.hasValidPublicationDate(element) &&
+        this.hasValidContentType(element);
 };
 
 

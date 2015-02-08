@@ -1,5 +1,5 @@
 /**All Configuration Dev and Production**/
-"use strict"
+"use strict";
 
 var os = require("os");
 
