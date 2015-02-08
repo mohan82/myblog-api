@@ -19,7 +19,7 @@ function executeShellCommand(command) {
 }
 
 
-gulp.task("build", ['build-all', 'test','coverage','jshint']);
+gulp.task("build", ['build-all', 'coverage', 'jshint']);
 
 gulp.task("clean-build", ['clean-all']);
 
@@ -88,11 +88,12 @@ gulp.task('execute-test', function () {
 gulp.task('jshint', function () {
     //ignore test and node modules dir for code quality
     var codeQualityDir = ["!**/**/test/*.js",
-        "!**/node_modules/**/*.js", "**/**/*.js","!**/build/**/"];
+        "!**/node_modules/**/*.js", "**/**/*.js", "!**/build/**/"];
 
     return gulp.src(codeQualityDir).
         pipe(jshint()).
-        pipe(jshint.reporter(jshintStylish));
+        pipe(jshint.reporter(jshintStylish)).
+        pipe(jshint.reporter('fail'));
 
 });
 
