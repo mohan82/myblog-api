@@ -1,7 +1,9 @@
 "use strict";
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
+var istanbul = require('gulp-istanbul');
 var jshintStylish = require('jshint-stylish');
+var mocha = require('gulp-mocha');
 
 require('shelljs/global');
 
@@ -9,6 +11,7 @@ var COMMON_DIR = "common/";
 var BLOG_PARSER_DIR = "blogparser/";
 var WEBAPP_DIR = "webapp/";
 var PERSISTENCE_DIR = "persistence/";
+var TEST_DIR = "*/test/*.js";
 
 
 function executeShellCommand(command) {
@@ -16,7 +19,7 @@ function executeShellCommand(command) {
 }
 
 
-gulp.task("build", ['build-all', 'test','jshint']);
+gulp.task("build", ['build-all', 'test','coverage','jshint']);
 
 gulp.task("clean-build", ['clean-all']);
 
@@ -25,7 +28,7 @@ gulp.task("default", ["build"]);
 
 
 gulp.task("test", function () {
-    executeShellCommand("mocha -R spec  **/test/*.js ");
+    executeShellCommand("mocha -R spec " + TEST_DIR);
 });
 gulp.task("clean-all", ["clean-common", "clean-blogparser", "clean-persistence", "clean-webapp"]);
 gulp.task("build-all", ["build-common", "build-blogparser", "build-persistence", "build-webapp"]);
@@ -83,9 +86,28 @@ gulp.task('execute-test', function () {
 
 //Linting  and Code Quality Checks
 gulp.task('jshint', function () {
-    return gulp.src(["!**/**/test/*.js",
-        "!**/node_modules/**/*.js","**/**/*.js"]).
+    //ignore test and node modules dir for code quality
+    var codeQualityDir = ["!**/**/test/*.js",
+        "!**/node_modules/**/*.js", "**/**/*.js"];
+    return gulp.src(codeQualityDir).
         pipe(jshint()).
         pipe(jshint.reporter(jshintStylish));
 
+});
+
+gulp.task('coverage', function () {
+    var coverageDir = ["**/**/*.js", "!**/node_modules/**/*.js", "!**/build/**/"];
+    return gulp.src(coverageDir)
+        .pipe(istanbul({includeUntested: true})) // Covering files
+        .pipe(istanbul.hookRequire()) // Force `require` to return covered files
+        .on('finish', function () {
+            gulp.src(['*/test/*.js'])
+                .pipe(mocha({reporter: 'spec'}))
+                .pipe(istanbul.writeReports({
+                    dir: './build/unit-test-coverage',
+                    reporters: ['lcov'],
+                    reportOpts: {dir: './build/unit-test-coverage'}
+                }));
+
+        });
 });
