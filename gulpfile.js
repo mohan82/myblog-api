@@ -1,5 +1,7 @@
-"use strict"
+"use strict";
 var gulp = require('gulp');
+var jshint = require('gulp-jshint');
+var jshintStylish = require('jshint-stylish');
 
 require('shelljs/global');
 
@@ -9,14 +11,12 @@ var WEBAPP_DIR = "webapp/";
 var PERSISTENCE_DIR = "persistence/";
 
 
-
-
-function executeShellCommand(command, ignoreError) {
+function executeShellCommand(command) {
     exec(command, {silent: false});
 }
 
 
-gulp.task("build", ['build-all', 'test']);
+gulp.task("build", ['build-all', 'test','jshint']);
 
 gulp.task("clean-build", ['clean-all']);
 
@@ -24,13 +24,11 @@ gulp.task("clean-build", ['clean-all']);
 gulp.task("default", ["build"]);
 
 
-gulp.task("test",function(){
+gulp.task("test", function () {
     executeShellCommand("mocha -R spec  **/test/*.js ");
 });
 gulp.task("clean-all", ["clean-common", "clean-blogparser", "clean-persistence", "clean-webapp"]);
 gulp.task("build-all", ["build-common", "build-blogparser", "build-persistence", "build-webapp"]);
-
-
 
 
 gulp.task("clean-persistence", function () {
@@ -81,4 +79,13 @@ gulp.task("build-webapp", function () {
 
 gulp.task('execute-test', function () {
     gulp.watch("**/**/*.js", ["test"]);
+});
+
+//Linting  and Code Quality Checks
+gulp.task('jshint', function () {
+    return gulp.src(["!**/**/test/*.js",
+        "!**/node_modules/**/*.js","**/**/*.js"]).
+        pipe(jshint()).
+        pipe(jshint.reporter(jshintStylish));
+
 });

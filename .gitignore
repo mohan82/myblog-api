@@ -6,3 +6,4 @@ npm*.log
 *.log
 *.out
 *.db
+build/
