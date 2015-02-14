@@ -13,7 +13,7 @@ var BLOG_PARSER_DIR = "blogparser/";
 var WEBAPP_DIR = "webapp/";
 var PERSISTENCE_DIR = "persistence/";
 var TEST_DIR = "*/test/*.js";
-var BUILD_DIR = "build/"
+var BUILD_DIR = "build/";
 //ignore test,build and node modules dir
 var CODE_DIR = ["!**/**/test/*.js",
     "!**/node_modules/**/*.js", "**/**/*.js", "!**/build/**/"];
