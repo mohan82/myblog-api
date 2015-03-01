@@ -1,7 +1,7 @@
 /**
  * Created by mohan on 25/10/14.
  */
-"use strict"
+"use strict";
 var BlogService = require("../blogservice.js");
 
 //File Dependencies

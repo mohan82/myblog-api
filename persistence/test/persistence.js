@@ -1,3 +1,5 @@
+"use strict";
+
 var Blog= require('../persistence').Blog;
 var chai = require("chai");
 var common = require("common");

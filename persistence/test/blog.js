@@ -1,5 +1,5 @@
 "use strict";
-
+/* global knex,beforeEach,afterEach,it */
 
 var chaiAsPromised = require("chai-as-promised");
 var chai = require("chai");
@@ -11,7 +11,6 @@ var CONST = require('../sqlconst');
 
 var Blog = require("../blog");
 var common = require('common');
-var knexModule = require("knex");
 
 describe("Integration Test for Blog DB", function () {
 
@@ -69,6 +68,19 @@ describe("Integration Test for Blog DB", function () {
             .that.equals(TEST_POST.title);
     });
 
+    it("given Valid Post Record getAllPosts should return valid post guid", function () {
+        return blogObj.getAllPosts(10).should.eventually.have.deep
+            .property('[0]').that.deep.have.property(CONST.POST.GUID)
+            .that.equals(TEST_POST.guid);
+    });
+
+    it("given Valid Post Record getAllPosts should return valid post publicationDate", function () {
+         return blogObj.getAllPosts(10).then(function(result){
+             var pubDate = new Date(result[0].publication_date);
+             pubDate.should.deep.equal(TEST_POST.publicationDate);
+        });
+    });
+
     it("given valid post record findPostById should retun valid post record", function (done) {
         blogObj.getAllPosts().then(function (posts) {
             var post = posts[0];
@@ -94,6 +106,25 @@ describe("Integration Test for Blog DB", function () {
         });
 
     });
+
+    it("given undefined _determineDefaultLimit should return 50 ",function(){
+       blogObj._determineDefaultLimit().should.equal(50);
+        
+    });
+    it("given null _determineDefaultLimit should return 50 ",function(){
+        blogObj._determineDefaultLimit(null).should.equal(50);
+
+    });
+    it("given 550 _determineDefaultLimit should return 500 ",function(){
+     blogObj._determineDefaultLimit(550).should.equal(500);
+
+    });
+    it("given 100000  _determineDefaultLimit should return 500 ",function(){
+        blogObj._determineDefaultLimit(100000).should.equal(500);
+
+    });
+    
+    
 
 });
 

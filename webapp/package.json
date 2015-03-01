@@ -19,8 +19,9 @@
   "dependencies": {
     "blogparser": "blogparser/",
     "bluebird": "^2.3.11",
-    "persistence":"persistence/",
-    "common":"common/"
+    "common": "common/",
+    "express": "4.11.2",
+    "persistence": "persistence/"
   },
   "devDependencies": {
     "chai": "1.10.0",
@@ -28,7 +29,6 @@
     "mocha": "1.21.4",
     "sinon": "1.11.1",
     "sqlite3": "3.0.4"
-
   },
   "engines": {
     "node": ">=0.11.14",

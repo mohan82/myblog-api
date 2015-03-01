@@ -38,9 +38,9 @@ Blog.prototype.createPostTable = function () {
 };
 
 
-Blog.prototype.cleanUp = function(){
+Blog.prototype.cleanUp = function () {
     console.log("Cleaning up Knex");
-   this.knex.destroy();
+    this.knex.destroy();
 };
 
 Blog.prototype.savePost = function (post) {
@@ -48,14 +48,14 @@ Blog.prototype.savePost = function (post) {
         "title": post.title,
         "content": post.content,
         "guid": post.guid,
-        "publication_date":post.publicationDate
+        "publication_date": post.publicationDate
     };
     return this.knex.insert(record).into(CONST.POST.TABLE);
 };
 
 Blog.prototype.deletePost = function (postId) {
-    console.info("Deleting post :%d",postId);
-    return this.knex(CONST.POST.TABLE).where(CONST.POST.PK,postId).del();
+    console.info("Deleting post :%d", postId);
+    return this.knex(CONST.POST.TABLE).where(CONST.POST.PK, postId).del();
 };
 
 //Limit Helper functions
@@ -85,25 +85,25 @@ Blog.prototype._determineDefaultLimit = function (limit) {
 
 // Query functions
 
+function selectAllColumns(knex) {
+    return knex.
+        select(CONST.POST.PK, CONST.POST.TITLE, CONST.POST.CONTENT,CONST.POST.PUB_DATE,CONST.POST.GUID).
+        from(CONST.POST.TABLE);
+}
+
 Blog.prototype.findPostById = function (postId) {
-    return this.knex.
-        select(CONST.POST.PK,CONST.POST.TITLE, CONST.POST.CONTENT, CONST.POST.GUID)
-        .from(CONST.POST.TABLE)
-        .where(CONST.POST.PK, postId);
+    return selectAllColumns(this.knex).
+        where(CONST.POST.PK, postId);
 };
 
 Blog.prototype.getAllPosts = function (limit) {
-    return this.knex.select(CONST.POST.PK,CONST.POST.TITLE, CONST.POST.CONTENT, CONST.POST.GUID)
-        .from(CONST.POST.TABLE).limit(this._determineDefaultLimit(limit));
+    return this.knex.select(CONST.POST.PK,CONST.POST.TITLE,CONST.POST.GUID,CONST.POST.PUB_DATE).
+        from(CONST.POST.TABLE).limit(this._determineDefaultLimit(limit));
 };
-
 Blog.prototype.findPostByTitle = function (title) {
-    return this.knex.
-        select(CONST.POST.PK,CONST.POST.TITLE, CONST.POST.CONTENT, CONST.POST.GUID)
-        .from(CONST.POST.TABLE)
-        .where(CONST.POST.TITLE, title);
+    return selectAllColumns(this.knex).
+        where(CONST.POST.TITLE, title);
 };
-
 
 
 module.exports = Blog;
