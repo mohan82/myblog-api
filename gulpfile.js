@@ -10,7 +10,7 @@ require('shelljs/global');
 
 var COMMON_DIR = "common/";
 var BLOG_PARSER_DIR = "blogparser/";
-var WEBAPP_DIR = "webapp/";
+var REST_DIR = "blogrest/";
 var PERSISTENCE_DIR = "persistence/";
 var TEST_DIR = "*/test/*.js";
 var BUILD_DIR = "build/";
@@ -65,7 +65,7 @@ gulp.task("clean-common", function () {
 
 gulp.task("clean-webapp", function () {
     console.log("Cleaning WebApp node modules");
-    executeShellCommand("rm -r " + WEBAPP_DIR + "node_modules");
+    executeShellCommand("rm -r " + REST_DIR + "node_modules");
 });
 
 gulp.task("build-common", function () {
@@ -86,7 +86,7 @@ gulp.task("build-persistence", function () {
 });
 
 gulp.task("build-webapp", function () {
-    executeShellCommand("npm install " + WEBAPP_DIR + " --prefix " + WEBAPP_DIR);
+    executeShellCommand("npm install " + REST_DIR + " --prefix " + REST_DIR);
 
 });
 

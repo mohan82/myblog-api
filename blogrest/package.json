@@ -1,8 +1,8 @@
 {
-  "name": "myblog",
+  "name": "blogrest",
   "version": "1.0.0",
-  "description": "My Personal Blog",
-  "main": "blogservice.js",
+  "description": "Rest API for My Personal Blog",
+  "main": "blogrest.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

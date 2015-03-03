@@ -1,6 +1,6 @@
 "use strict";
 
-var BlogService = require('../webapp/blogservice');
+var BlogService = require('../blogrest/blogservice');
 var Blog = require('persistence').Blog;
 var common = require('common');
 var BlueBirdPromise = require('bluebird');
