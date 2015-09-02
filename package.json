@@ -22,7 +22,7 @@
   "devDependencies": {
     "chai": "1.9.2",
     "chai-as-promised": "4.1.1",
-    "gulp": "3.8.11",
+    "gulp": "3.9.0",
     "gulp-istanbul": "0.6.0",
     "gulp-jscs": "1.4.0",
     "gulp-jshint": "1.9.2",

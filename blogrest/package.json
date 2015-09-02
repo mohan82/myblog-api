@@ -28,10 +28,10 @@
     "chai-as-promised": "4.1.1",
     "mocha": "1.21.4",
     "sinon": "1.11.1",
-    "sqlite3": "3.0.4"
+    "sqlite3": "3.0.10"
   },
   "engines": {
-    "node": ">=0.11.14",
+    "node": ">=0.12.7",
     "npm": ">=2.0.0"
   },
   "engineStrict": true
