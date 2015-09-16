@@ -80,4 +80,16 @@ describe("Test for Blog Parser", function () {
             .with.deep.property('publicationDate').that.is.to.equal(new Date('Mon, 06 Jun 2011 10:31:11 +0000'));
     });
 
+    it("given blog.xml content parseImageLink should parse all images", function (done) {
+
+        blogParser.parseBlogContent(testContent).then(function (result) {
+            blogParser.getPosts(result).then(function (posts) {
+                posts.forEach(function(post){
+                    console.log(post.content);
+                });
+                done();
+            });
+        });
+    });
+
 });

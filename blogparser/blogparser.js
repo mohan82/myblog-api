@@ -5,6 +5,8 @@ var xml2js = require('xml2js');
 var BluebirdPromise = require("bluebird");
 var parser = new xml2js.Parser();
 var common = require("common");
+var cheerio = require("cheerio");
+var _ = require('lodash');
 
 var BlogParser = {};
 
@@ -30,7 +32,7 @@ BlogParser.parseBlogContent = function (xml) {
         parser.parseString(xml, function (err, rawBlogContent) {
             if (err) {
                 var error = new BlogParser.ParseError("Cannot parse given :" +
-                xml + " , " + err.stack);
+                    xml + " , " + err.stack);
                 reject(error);
             } else {
                 resolve(rawBlogContent);
@@ -86,13 +88,53 @@ BlogParser._parsePosts = function (rawBlogContent) {
 
             var publicationDate = new Date(BlogParser._getPubDate(itemElement));
             var post = new BlogParser.Post(BlogParser._getTitle(itemElement),
-                BlogParser._getContent(itemElement),
+                BlogParser.stripAbsoluteLinks(BlogParser._getContent(itemElement)),
                 publicationDate,
                 BlogParser._getGuid(itemElement));
             posts.push(post);
         });
     });
     return posts;
+};
+
+
+BlogParser._replaceLocalLinks = function ($) {
+    $('a').each(function () {
+        BlogParser._replaceAbsoluteLink($, "href", this);
+    });
+
+};
+
+BlogParser._removeAbsoluteLink = function (link) {
+    link = link.replace("http://198.12.75.20/wordpress/wp-content/uploads/", "");
+    link = link.replace("http://creativemohan.com/wp-content/uploads/", "");
+    return link;
+};
+
+BlogParser._replaceAbsoluteLink = function ($, attrName, elementContext) {
+    var link = $(elementContext).attr(attrName);
+    var text = $(elementContext).text();
+    if (_.contains(link, '198.12.75.20') ||
+            _.contains(link, 'creativemohan.com')) {
+        $(elementContext).attr(attrName, BlogParser.
+            _removeAbsoluteLink(link));
+    } else if (_.contains(text, "198.12.75.20") ||
+        _.contains(text, 'creativemohan.com')) {
+        $(elementContext).text(attrName, BlogParser.
+            _removeAbsoluteLink(text));
+    }
+};
+BlogParser._replaceImageLinks = function ($) {
+    $('img').each(function () {
+        BlogParser._replaceAbsoluteLink($, "src", this);
+    });
+};
+
+BlogParser.stripAbsoluteLinks = function (content) {
+    var $ = cheerio.load(content);
+    BlogParser._replaceLocalLinks($);
+    BlogParser._replaceImageLinks($);
+    return $.html();
 };
 
 //__End Private Methods ___
